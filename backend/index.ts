@@ -15,6 +15,12 @@ const typeDefs = gql`
       count: Int
       new_or_used: String
     ): Boolean
+    editEquipment(
+      id: String
+      used_by: String
+      count: Int
+      new_or_used: String
+    ): Boolean
     deleteEquipment(id: String): Equipment
   }
   type Team {
@@ -55,6 +61,15 @@ const resolvers: IResolvers = {
   Mutation: {
     insertEquipment: (parent, args, context, info) => {
       database.equipments.push(args);
+      return true;
+    },
+    editEquipment: (parent, args, context, info) => {
+      database.equipments
+        .filter(equipment => equipment.id === args.id)
+        .map(equipment => {
+          Object.assign(equipment, args);
+          return equipment;
+        });
       return true;
     },
     deleteEquipment: (parent, args, context, info) => {
