@@ -8,6 +8,15 @@ const typeDefs = gql`
     equipments: [Equipment]
     supplies: [Supply]
   }
+  type Mutation {
+    insertEquipment(
+      id: String
+      used_by: String
+      count: Int
+      new_or_used: String
+    ): Boolean
+    deleteEquipment(id: String): Equipment
+  }
   type Team {
     id: Int 
     manager: String
@@ -42,6 +51,19 @@ const resolvers: IResolvers = {
       .filter((team) => team.id === args.id)[0],
     equipments: () => database.equipments,
     supplies: () => database.supplies
+  },
+  Mutation: {
+    insertEquipment: (parent, args, context, info) => {
+      database.equipments.push(args);
+      return true;
+    },
+    deleteEquipment: (parent, args, context, info) => {
+      const deleted = database.equipments
+        .filter(equipment => equipment.id === args.id)[0];
+      database.equipments = database.equipments
+        .filter(equipment => equipment.id !== args.id);
+      return deleted;
+    }
   }
 }
 
