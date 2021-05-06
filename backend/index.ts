@@ -83,6 +83,6 @@ const resolvers: IResolvers = {
 }
 
 const server = new ApolloServer({ typeDefs, resolvers });
-server.listen().then((res: ServerInfo) => {
+server.listen(3000).then((res: ServerInfo) => {
   console.log(res.url);
 });
