@@ -1,6 +1,8 @@
 import { ApolloServer, gql } from "apollo-server";
 
 const typeDefs = gql`
+  scalar DateTime
+
   enum PhotoCategory {
     SELFIE
     PORTRAIT
@@ -20,6 +22,7 @@ const typeDefs = gql`
     name: String
     avatar: String
     postedPhotos: [Photo!]!
+    inPhotos: [Photo!]!
   }
 
   type Photo {
@@ -29,6 +32,9 @@ const typeDefs = gql`
     description: String
     category: PhotoCategory!
     postedBy: User!
+    taggedUsers: [User!]!
+    created: DateTime!
+    addPhotos(after: DateTime): [Photo!]!
   }
 
   type Query {
