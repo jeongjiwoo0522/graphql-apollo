@@ -1,4 +1,5 @@
-import { photos } from "../entity/photo";
+import { Photo, photos } from "../entity/photo";
+import { users } from "../entity/user";
 
 // Query 
 export const totalPhotos = () => {
@@ -11,7 +12,7 @@ export const allPhotos = () => {
 
 // Mutation
 export const postPhoto = () => {
-  let post_id: number = 0;
+  let post_id: number = 3;
   return (parent, args) => {
     const newPhoto = {
       id: ++post_id,
@@ -24,5 +25,11 @@ export const postPhoto = () => {
 
 // Trivial Resolver 
 export const url = () => {
-  return parent => `http://github.com/jeongjiwoo0522/img/${parent.id}.jpg`;
+  return (parent: Photo) => `http://github.com/jeongjiwoo0522/img/${parent.id}.jpg`;
+}
+
+export const postedBy = () => {
+  return (parent: Photo) => {
+    return users.find(u => u.githubLogin === parent.githubUser);
+  };
 }
