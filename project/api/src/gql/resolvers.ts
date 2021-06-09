@@ -1,4 +1,5 @@
 import * as photoService from "../service/photo";
+import * as userService from "../service/user";
 
 export const resolvers = {
   Query: {
@@ -12,5 +13,10 @@ export const resolvers = {
 
   Photo: {
     url: photoService.url(),
+    postedBy: photoService.postedBy()
+  },
+
+  User: {
+    postedPhotos: userService.postedPhotos(),
   },
 };
