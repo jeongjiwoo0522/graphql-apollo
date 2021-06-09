@@ -43,6 +43,6 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    postPhoto(input: PostPhotoInput!): Boolean!
+    postPhoto(input: PostPhotoInput!): Photo!
   }
 `;
