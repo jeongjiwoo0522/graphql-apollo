@@ -1,4 +1,5 @@
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer, gql } from "apollo-server-express";
+import express from "express";
 
 const typeDefs = gql`
   scalar DateTime
@@ -53,8 +54,14 @@ const resolvers = {
   }
 }
 
+const app = express();
+
 const server = new ApolloServer({ typeDefs, resolvers });
 
-server
-  .listen()
-  .then(res => console.log(`GraphQL Server running on ${res.url}`));
+server.applyMiddleware({ app });
+
+app.get("/", (req, res) => res.end("PhotoShare API에 오신 것을 환영합니다."));
+
+app.listen(4000, () => {
+  console.log(`GraphQL Server running @ http://localhost:4000${server.graphqlPath}`)
+})
