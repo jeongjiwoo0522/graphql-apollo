@@ -13,10 +13,12 @@ export const resolvers = {
 
   Photo: {
     url: photoService.url(),
-    postedBy: photoService.postedBy()
+    postedBy: photoService.postedBy(),
+    taggedUsers: photoService.taggedUsers(),
   },
 
   User: {
     postedPhotos: userService.postedPhotos(),
-  },
+    inPhotos: userService.inPhotos(),
+  },  
 };
