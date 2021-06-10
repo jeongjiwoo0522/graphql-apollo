@@ -1,5 +1,6 @@
 import { Photo, photos } from "../entity/photo";
-import { users } from "../entity/user";
+import { User, users } from "../entity/user";
+import { tags } from "../entity/tag";
 
 // Query 
 export const totalPhotos = () => {
@@ -32,4 +33,12 @@ export const postedBy = () => {
   return (parent: Photo) => {
     return users.find(u => u.githubLogin === parent.githubUser);
   };
+}
+
+export const taggedUsers = () => {
+  return (parent: Photo): User[] => 
+    tags
+    .filter(tag => tag.photoId === parent.id)
+    .map(tag => tag.userId)
+    .map(userId => users.find(u => u.githubLogin === userId));
 }
